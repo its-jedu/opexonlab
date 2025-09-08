@@ -10,8 +10,10 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 // const BlogPage = lazy(() => import("./pages/BlogPage"));
 // const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 // const ContactPage = lazy(() => import("./pages/ContactPage"));
-// const LoginPage = lazy(() => import("./pages/LoginPage"));
-// const GetStartedPage = lazy(() => import("./pages/GetStartedPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
+const GmailPage = lazy(() => import("./pages/GmailPage"));
+const GetStartedPage = lazy(() => import("./pages/GetStartedPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
@@ -36,8 +38,10 @@ function App() {
         {/* <Route path="/blog" element={<BlogPage />} /> */}
         {/* <Route path="/services" element={<ServicesPage />} /> */}
         {/* <Route path="/contact" element={<ContactPage />} /> */}
-        {/* <Route path="/login" element={<LoginPage />} /> */}
-        {/* <Route path="/get-started" element={<GetStartedPage />} /> */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/gmail" element={<GmailPage />} />
+        <Route path="/get-started" element={<GetStartedPage />} />
 
         {/* Not Found route */}
         <Route path="*" element={<NotFound />} />
