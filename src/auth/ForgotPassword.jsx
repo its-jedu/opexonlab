@@ -1,18 +1,30 @@
 import React, { useState } from "react";
 import forget from "../assets/forget.png";
 import { useNavigate } from "react-router-dom";
+import { forgotPassword } from "../services/auth";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) {
-      alert("Email is required");
-    } else {
-      // Simulate sending reset link (replace with API call)
-      navigate("/gmail");
+      setError("Email is required");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    try {
+      await forgotPassword(email);
+      navigate("/gmail"); // success page
+    } catch (err) {
+      setError(err.response?.data?.detail || "Failed to send reset link");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -34,7 +46,7 @@ const ForgotPassword = () => {
         </h1>
         <p className="mb-6">
           Please enter your registered email address and we'll send you a link
-          to reset your password and confirmation OTP
+          to reset your password
         </p>
 
         <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
@@ -47,14 +59,16 @@ const ForgotPassword = () => {
               required
               className="w-full px-4 py-2 border border-[#000000] rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200"
             />
+            {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
           </div>
 
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-[#11EA53] text-white font-semibold py-2 rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200"
+            disabled={loading}
+            className="w-full bg-[#11EA53] text-white font-semibold py-2 rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 disabled:opacity-50"
           >
-            SUBMIT
+            {loading ? "Sending..." : "SUBMIT"}
           </button>
         </form>
       </div>

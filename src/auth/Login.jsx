@@ -1,19 +1,32 @@
 import React, { useState } from "react";
 import auth from "../assets/auth.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../services/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       setError("All fields are required");
-    } else {
-      setError(""); // Simulate successful login (replace with API call)
-      // Navigate to dashboard or home (not implemented)
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    try {
+      await login({ emailOrUsername: email, password });
+      navigate("/dashboard"); // redirect after success
+    } catch (err) {
+      setError(err.response?.data?.detail || "Invalid credentials");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,9 +69,10 @@ const Login = () => {
           {/* Continue Button */}
           <button
             type="submit"
-            className="w-full bg-[#11EA53] text-black py-2 rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200"
+            disabled={loading}
+            className="w-full bg-[#11EA53] text-black py-2 rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 disabled:opacity-50"
           >
-            Continue
+            {loading ? "Signing in..." : "Continue"}
           </button>
           <div className="flex space-x-2 items-center">
             <hr className="flex-1 h-[1px] border-none bg-black" />

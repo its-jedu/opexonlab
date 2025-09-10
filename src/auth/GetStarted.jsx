@@ -1,17 +1,36 @@
 import React, { useState } from "react";
 import auth from "../assets/auth.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { register } from "../services/auth";
 
 const GetStarted = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email) {
-      alert("Email/Phone number is required");
-    } else {
-      // Simulate registration start (replace with API call or navigation)
-      // Navigate to registration form (not implemented)
+    if (!username || !email || !password) {
+      setError("All fields are required");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    try {
+      await register({ username, email, password });
+      navigate("/dashboard");
+    } catch (err) {
+      setError(
+        err.response?.data?.detail ||
+          "Failed to register. Please check your input."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -34,20 +53,45 @@ const GetStarted = () => {
           <div>
             <input
               type="text"
-              placeholder="Email/Phone number"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              className="w-full px-4 py-2 bg-[#D9D9D9] rounded-full focus:outline-none focus:ring-2 focus:ring-[#11EA53] transition duration-200"
+            />
+          </div>
+          <div>
+            <input
+              type="email"
+              placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full px-4 py-2 bg-[#D9D9D9] rounded-full focus:outline-none focus:ring-2 focus:ring-[#11EA53] transition duration-200"
             />
           </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError("");
+              }}
+              required
+              className="w-full px-4 py-2 bg-[#D9D9D9] rounded-full focus:outline-none focus:ring-2 focus:ring-[#11EA53] transition duration-200"
+            />
+            {error && <p className="text-red-600 text-sm mt-1">{error}</p>}
+          </div>
 
           {/* Continue Button */}
           <button
             type="submit"
-            className="w-full bg-[#11EA53] text-black py-2 rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200"
+            disabled={loading}
+            className="w-full bg-[#11EA53] text-black py-2 rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 disabled:opacity-50"
           >
-            Continue
+            {loading ? "Registering..." : "Continue"}
           </button>
           <div className="flex space-x-2 items-center">
             <hr className="flex-1 h-[1px] border-none bg-black" />
