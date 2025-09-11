@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../services/auth";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState(""); // email or username
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -13,18 +13,30 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (!identifier || !password) {
       setError("All fields are required");
       return;
     }
 
     setLoading(true);
     setError("");
+
     try {
-      await login({ emailOrUsername: email, password });
-      navigate("/dashboard"); // redirect after success
+      const payload = {
+        emailOrUsername: identifier,
+        ...(identifier.includes("@")
+          ? { email: identifier }
+          : { username: identifier }),
+        password,
+      };
+
+      await login(payload);
+      navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.detail || "Invalid credentials");
+      const data = err.response?.data;
+      if (data?.detail) setError(data.detail);
+      else if (typeof data === "string") setError(data);
+      else setError("Invalid credentials");
     } finally {
       setLoading(false);
     }
@@ -44,9 +56,9 @@ const Login = () => {
           <div>
             <input
               type="text"
-              placeholder="Email/Phone number"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email or Username"
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
               required
               className="w-full px-4 py-2 bg-[#D9D9D9] rounded-full focus:outline-none focus:ring-2 focus:ring-[#11EA53] transition duration-200"
             />
@@ -74,6 +86,7 @@ const Login = () => {
           >
             {loading ? "Signing in..." : "Continue"}
           </button>
+
           <div className="flex space-x-2 items-center">
             <hr className="flex-1 h-[1px] border-none bg-black" />
             <span className="text-black">or</span>
@@ -89,16 +102,14 @@ const Login = () => {
               Continue with Gmail
             </button>
           </Link>
+
           <div className="flex justify-between">
             <label className="flex items-center">
               <input type="checkbox" className="mr-2" />
               Remember me
             </label>
 
-            <Link
-              to="/forgot-password"
-              className="text-[#11EA53] hover:underline"
-            >
+            <Link to="/forgot-password" className="text-[#11EA53] hover:underline">
               Forgot Password?
             </Link>
           </div>
@@ -115,12 +126,8 @@ const Login = () => {
         </div>
         <div className="space-x-8 flex text-sm text-gray-600">
           <p>&copy; 2025 ADMS</p>
-          <a href="#" className="hover:underline">
-            Privacy Policy
-          </a>{" "}
-          <a href="#" className="hover:underline">
-            Terms of Service
-          </a>
+          <a href="#" className="hover:underline">Privacy Policy</a>
+          <a href="#" className="hover:underline">Terms of Service</a>
         </div>
       </div>
     </div>
