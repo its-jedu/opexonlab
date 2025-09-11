@@ -67,10 +67,8 @@ class LoginSerializer(serializers.Serializer):
         if not identifier or not password:
             raise serializers.ValidationError({"detail": "Email/Username and password required"})
 
-        # Try login with identifier as username first
         user = authenticate(username=str(identifier).strip(), password=password)
 
-        # Fallback: if identifier is email, resolve to username then auth
         if user is None:
             try:
                 u = User.objects.get(email__iexact=str(identifier).strip())

@@ -5,7 +5,6 @@ from rest_framework import status, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.http import JsonResponse
 
-# drf-spectacular annotations for good /api/docs
 from drf_spectacular.utils import extend_schema, OpenApiResponse
 
 from .serializers import (
@@ -96,7 +95,7 @@ class ForgotPasswordView(APIView):
     permission_classes = [permissions.AllowAny]
 
     @extend_schema(
-        request=MessageSerializer,  # replace with a real serializer when you implement it
+        request=MessageSerializer,
         responses={200: MessageSerializer},
     )
     def post(self, request):
@@ -107,7 +106,7 @@ class ResetPasswordView(APIView):
     permission_classes = [permissions.AllowAny]
 
     @extend_schema(
-        request=MessageSerializer,  # replace with a real serializer when you implement it
+        request=MessageSerializer,
         responses={200: MessageSerializer},
     )
     def post(self, request):
