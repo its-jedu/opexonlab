@@ -67,8 +67,13 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 
-SPECTACULAR_SETTINGS = {"TITLE": "OPEXONLAB", "VERSION": "1.0.0"}
-
+SPECTACULAR_SETTINGS = {
+    "TITLE": "OPEXONLAB",
+    "DESCRIPTION": "API for Opexonlab",
+    "VERSION": "1.0.0",
+    "SERVERS": [{"url": "/api", "description": "Default"}],
+    "COMPONENT_SPLIT_REQUEST": True,  # this separate request/response bodies
+}
 
 ROOT_URLCONF = 'config.urls'
 
