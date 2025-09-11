@@ -67,7 +67,7 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 
-SPECTACULAR_SETTINGS = {"TITLE": "Project API", "VERSION": "1.0.0"}
+SPECTACULAR_SETTINGS = {"TITLE": "OPEXONLAB", "VERSION": "1.0.0"}
 
 
 ROOT_URLCONF = 'config.urls'
@@ -124,8 +124,8 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = ""          # your sender
-EMAIL_HOST_PASSWORD = ""      # app password
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 

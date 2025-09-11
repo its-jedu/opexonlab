@@ -15,7 +15,7 @@ def tokens_for(user):
     r = RefreshToken.for_user(user)
     return {"access": str(r.access_token), "refresh": str(r)}
 
-def health(_):  # simple JSON view already used
+def health(_):
     from django.http import JsonResponse
     return JsonResponse({"status": "ok"})
 
@@ -45,7 +45,7 @@ class MeView(APIView):
 
 class LogoutView(APIView):
     def post(self, request):
-        logout(request)  # client should discard tokens
+        logout(request)
         return Response({"detail": "Logged out"})
 
 class ForgotPasswordView(APIView):
@@ -57,7 +57,6 @@ class ForgotPasswordView(APIView):
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            # do not leak existence
             return Response({"detail": "If the email exists, a reset link has been sent."})
         uid = make_uid(user.id)
         token = token_generator.make_token(user)
