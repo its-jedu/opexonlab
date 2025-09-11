@@ -72,7 +72,7 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "API for Opexonlab",
     "VERSION": "1.0.0",
     "SERVERS": [{"url": "/api", "description": "Default"}],
-    "COMPONENT_SPLIT_REQUEST": True,  # this separate request/response bodies
+    "COMPONENT_SPLIT_REQUEST": True,
 }
 
 ROOT_URLCONF = 'config.urls'
