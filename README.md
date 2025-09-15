@@ -15,7 +15,7 @@ The website serves as both an informational hub and a showcase platform for prod
 
 ---
 
-## 🛠️ Project Structure
+## Project Structure
 ```
 
 OPEXONLAB/
@@ -28,7 +28,7 @@ OPEXONLAB/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 Make sure you have these installed:
@@ -153,9 +153,8 @@ STATICFILES_DIRS = [BASE_DIR / "dist"]
 
 ---
 
-## 📝 License
+## License
 
 This project is proprietary to **Opexon Lab**.
 No part may be copied or distributed without written permission.
 
-```
