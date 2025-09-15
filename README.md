@@ -1,6 +1,4 @@
-Here’s a **single, complete `README.md`** you can copy-paste directly into your repo — everything is in one block, ready to go:
 
-```markdown
 # Opexon Lab Website
 
 Opexon Lab is the parent digital product and brand website for a startup focused on building sustainable and efficient digital solutions across fintech, edtech, healthtech, and beyond.
