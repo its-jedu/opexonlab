@@ -7,7 +7,7 @@ The website serves as both an informational hub and a showcase platform for prod
 
 ---
 
-## 🌍 Purpose
+## Purpose
 - Present Opexon Lab as a forward-thinking, multi-product startup.  
 - Provide a central space to highlight launched and upcoming products.  
 - Build trust with visitors through a professional and user-friendly experience.  
@@ -30,7 +30,7 @@ OPEXONLAB/
 
 ## 🚀 Getting Started
 
-### 1️⃣ Prerequisites
+### Prerequisites
 Make sure you have these installed:
 
 - [Python 3.11+](https://www.python.org/downloads/)
@@ -39,7 +39,7 @@ Make sure you have these installed:
 
 ---
 
-### 2️⃣ Backend — Django & DRF
+### Backend: Django & DRF
 
 The backend powers authentication, APIs, and admin features.
 
@@ -72,7 +72,7 @@ Backend runs at **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
 
 ---
 
-### 3️⃣ Frontend — Vite + React
+### Frontend: Vite + React
 
 The frontend is a fast React SPA powered by Vite.
 
@@ -95,18 +95,18 @@ Frontend runs at **[http://127.0.0.1:5173](http://127.0.0.1:5173)**
 
 ---
 
-### 4️⃣ Running Both Together
+### Running Both Together
 
 Open **two terminals**:
 
-**Terminal 1** – Backend:
+**Terminal 1** Backend:
 
 ```bash
 cd backend
 python manage.py runserver
 ```
 
-**Terminal 2** – Frontend:
+**Terminal 2** Frontend:
 
 ```bash
 cd src
@@ -117,7 +117,7 @@ Make sure your frontend API base URL matches your backend (`http://127.0.0.1:800
 
 ---
 
-### 5️⃣ Build & Deploy
+### Build & Deploy
 
 #### Frontend
 
@@ -140,14 +140,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "dist"]
 ```
 
-> For production, consider:
->
-> * Gunicorn or Uvicorn + Nginx for Django
-> * Separate hosting (e.g., Netlify/Vercel) for the frontend
-
 ---
 
-## 📂 Code Organization
+## Code Organization
 
 | Folder            | Purpose                                                        |
 | ----------------- | -------------------------------------------------------------- |
@@ -158,31 +153,9 @@ STATICFILES_DIRS = [BASE_DIR / "dist"]
 
 ---
 
-## 💻 Development Notes
-
-* Django uses [Django REST Framework](https://www.django-rest-framework.org/) for APIs.
-* Frontend is TypeScript-ready (optional) and supports hot reload via Vite.
-* Store environment variables in a `.env` (e.g., `VITE_API_URL=http://127.0.0.1:8000/api`).
-* Use `npm run lint` (if configured) to check code style.
-
----
-
-## 🚀 Future Enhancements
-
-* Product dashboards for SaaS tools
-* Search across blog & products
-* Case studies and client testimonials
-* Newsletter and CRM integration
-* Multi-language support
-
----
-
 ## 📝 License
 
 This project is proprietary to **Opexon Lab**.
 No part may be copied or distributed without written permission.
 
-```
-
-✅ Save this as `README.md` at the root of your project — it’s a single, complete file with everything new developers need.
 ```
