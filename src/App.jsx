@@ -8,7 +8,7 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 // const AboutPage = lazy(() => import("./pages/AboutPage"));
 // const ProductPage = lazy(() => import("./pages/ProductPage"));
 // const BlogPage = lazy(() => import("./pages/BlogPage"));
-// const ServicesPage = lazy(() => import("./pages/ServicesPage"));
+const ServicePage = lazy(() => import("./pages/ServicePage"));
 // const ContactPage = lazy(() => import("./pages/ContactPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
@@ -36,7 +36,7 @@ function App() {
         {/* <Route path="/about" element={<AboutPage />} /> */}
         {/* <Route path="/product" element={<ProductPage />} /> */}
         {/* <Route path="/blog" element={<BlogPage />} /> */}
-        {/* <Route path="/services" element={<ServicesPage />} /> */}
+        <Route path="/services" element={<ServicePage />} />
         {/* <Route path="/contact" element={<ContactPage />} /> */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -51,4 +51,3 @@ function App() {
 }
 
 export default App;
-
