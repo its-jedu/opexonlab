@@ -8,10 +8,15 @@ import BlogDetails from "./pages/BlogDetails";
 const HomePage = lazy(() => import("./pages/HomePage"));
 // const AboutPage = lazy(() => import("./pages/AboutPage"));
 // const ProductPage = lazy(() => import("./pages/ProductPage"));
+<<<<<<< HEAD
 
 const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogDetail = lazy(() => import("./pages/BlogDetails"));
 // const ServicesPage = lazy(() => import("./pages/ServicesPage"));
+=======
+// const BlogPage = lazy(() => import("./pages/BlogPage"));
+const ServicePage = lazy(() => import("./pages/ServicePage"));
+>>>>>>> 35cda29984b8887c3a50353bf1d3ede64055203f
 // const ContactPage = lazy(() => import("./pages/ContactPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
@@ -38,11 +43,12 @@ function App() {
         <Route path="/" element={<HomePage />} />
         {/* <Route path="/about" element={<AboutPage />} /> */}
         {/* <Route path="/product" element={<ProductPage />} /> */}
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/blog/:id" element={<BlogDetail />} />
-        {/* <Route path="/services" element={<ServicesPage />} /> */}
-        {/* <Route path="/contact" element={<ContactPage />} /> */}
-        <Route path="/login" element={<LoginPage />} />
+<Route path="/blog" element={<BlogPage />} />
+<Route path="/blog/:id" element={<BlogDetail />} />
+<Route path="/services" element={<ServicePage />} />
+{/* <Route path="/contact" element={<ContactPage />} /> */}
+<Route path="/login" element={<LoginPage />} />
+
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/gmail" element={<GmailPage />} />
         <Route path="/get-started" element={<GetStartedPage />} />
@@ -55,4 +61,3 @@ function App() {
 }
 
 export default App;
-
