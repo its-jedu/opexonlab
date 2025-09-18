@@ -8,15 +8,14 @@ import BlogDetails from "./pages/BlogDetails";
 const HomePage = lazy(() => import("./pages/HomePage"));
 // const AboutPage = lazy(() => import("./pages/AboutPage"));
 // const ProductPage = lazy(() => import("./pages/ProductPage"));
-<<<<<<< HEAD
 
 const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogDetail = lazy(() => import("./pages/BlogDetails"));
 // const ServicesPage = lazy(() => import("./pages/ServicesPage"));
-=======
+
 // const BlogPage = lazy(() => import("./pages/BlogPage"));
 const ServicePage = lazy(() => import("./pages/ServicePage"));
->>>>>>> 35cda29984b8887c3a50353bf1d3ede64055203f
+
 // const ContactPage = lazy(() => import("./pages/ContactPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
