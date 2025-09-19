@@ -1,4 +1,3 @@
-@import "tailwindcss";
 
 @layer utilities {
   .animate-scale-pulse {
@@ -34,5 +33,4 @@ body {
 
 /* html {
   scroll-behavior: smooth;
-} */
-
+}
