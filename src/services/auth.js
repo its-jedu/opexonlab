@@ -3,16 +3,10 @@ import api from "../lib/api";
 // Register
 export const register = (payload) =>
   api.post("/auth/register/", payload).then((r) => r.data);
-
-// Login (accepts email or username)
 export const login = async ({ emailOrUsername, password }) => {
-  // Backend expects: "emailOrUsername" OR "email" OR "username"
   const payload = {
-    emailOrUsername,
-    ...(emailOrUsername.includes("@")
-      ? { email: emailOrUsername }
-      : { username: emailOrUsername }),
-    password,
+    emailOrUsername: emailOrUsername,
+    password: password,
   };
 
   const { data } = await api.post("/auth/login/", payload);
@@ -33,7 +27,7 @@ export const logout = async () => {
   try {
     await api.post("/auth/logout/");
   } catch (err) {
-    // ignore errors on logout
+
   }
   localStorage.removeItem("access");
   localStorage.removeItem("refresh");
@@ -53,3 +47,12 @@ export const resetPassword = (uid, token, newPassword) =>
       new_password: newPassword,
     })
     .then((r) => r.data);
+
+export const initializeAuth = () => {
+  const token = localStorage.getItem('access');
+  if (token) {
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+};
+
+initializeAuth();

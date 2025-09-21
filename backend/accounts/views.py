@@ -60,11 +60,24 @@ class LoginView(APIView):
         description="Login using username or email.",
     )
     def post(self, request):
-        serializer = LoginSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        print("Login request data:", request.data)  # DEBUG
+        serializer = LoginSerializer(data=request.data, context={'request': request})
+        
+        try:
+            serializer.is_valid(raise_exception=True)
+            print("Serializer validated successfully")  # DEBUG
+        except Exception as e:
+            print("Serializer validation error:", e)  # DEBUG
+            return Response(
+                {'error': str(e)}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         user = serializer.validated_data["user"]
+        print("Authenticated user:", user.username, user.email)  # DEBUG
+        
         refresh = RefreshToken.for_user(user)
+        print("Tokens generated")  # DEBUG
 
         return Response(
             {
