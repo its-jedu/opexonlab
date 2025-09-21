@@ -42,6 +42,7 @@ api.interceptors.response.use(
         localStorage.removeItem('access')
         localStorage.removeItem('refresh')
         localStorage.removeItem('user')
+        delete api.defaults.headers.common['Authorization']
         window.location.href = '/login'
       }
     }

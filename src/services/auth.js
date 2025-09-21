@@ -3,6 +3,8 @@ import api from "../lib/api";
 // Register
 export const register = (payload) =>
   api.post("/auth/register/", payload).then((r) => r.data);
+
+// Login
 export const login = async ({ emailOrUsername, password }) => {
   const payload = {
     emailOrUsername: emailOrUsername,
@@ -15,6 +17,8 @@ export const login = async ({ emailOrUsername, password }) => {
   localStorage.setItem("access", data.tokens.access);
   localStorage.setItem("refresh", data.tokens.refresh);
   localStorage.setItem("user", JSON.stringify(data.user));
+
+  api.defaults.headers.common['Authorization'] = `Bearer ${data.token.access}`;
 
   return data;
 };
@@ -32,6 +36,8 @@ export const logout = async () => {
   localStorage.removeItem("access");
   localStorage.removeItem("refresh");
   localStorage.removeItem("user");
+
+  delete api.defaults.headers.common['Authorization'];
 };
 
 // Forgot password
