@@ -2,7 +2,7 @@ import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import logo from "./assets/logo.png";
-import BlogDetails from "./pages/BlogDetails";
+// import BlogDetails from "./pages/BlogDetails";
 
 // Lazy load pages
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -42,11 +42,11 @@ function App() {
         <Route path="/" element={<HomePage />} />
         {/* <Route path="/about" element={<AboutPage />} /> */}
         {/* <Route path="/product" element={<ProductPage />} /> */}
-<Route path="/blog" element={<BlogPage />} />
-<Route path="/blog/:id" element={<BlogDetail />} />
-<Route path="/services" element={<ServicePage />} />
-{/* <Route path="/contact" element={<ContactPage />} /> */}
-<Route path="/login" element={<LoginPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/services" element={<ServicePage />} />
+        {/* <Route path="/contact" element={<ContactPage />} /> */}
+        <Route path="/login" element={<LoginPage />} />
 
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/gmail" element={<GmailPage />} />

@@ -1,3 +1,4 @@
+@import "tailwindcss";
 
 @layer utilities {
   .animate-scale-pulse {
