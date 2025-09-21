@@ -16,7 +16,7 @@ const BlogDetail = lazy(() => import("./pages/BlogDetails"));
 // const BlogPage = lazy(() => import("./pages/BlogPage"));
 const ServicePage = lazy(() => import("./pages/ServicePage"));
 
-// const ContactPage = lazy(() => import("./pages/ContactPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
 const GmailPage = lazy(() => import("./pages/GmailPage"));
@@ -45,7 +45,7 @@ function App() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/services" element={<ServicePage />} />
-        {/* <Route path="/contact" element={<ContactPage />} /> */}
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="/login" element={<LoginPage />} />
 
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
