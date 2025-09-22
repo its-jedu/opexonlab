@@ -13,7 +13,6 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-// Response interceptor to handle token refresh
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -25,11 +24,8 @@ api.interceptors.response.use(
       try {
         const refreshToken = localStorage.getItem('refresh')
         if (refreshToken) {
-          const response = await axios.post('/api/auth/token/refresh/', {
+          const response = await api.post('/auth/token/refresh/', {
             refresh: refreshToken
-          }, {
-            baseURL: '/api',
-            withCredentials: false
           })
           
           const newAccessToken = response.data.access

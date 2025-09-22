@@ -11,16 +11,25 @@ export const login = async ({ emailOrUsername, password }) => {
     password: password,
   };
 
-  const { data } = await api.post("/auth/login/", payload);
+  try {
+    const response = await api.post("/auth/login/", payload);
+    const data = response.data;
 
-  // Save tokens and user in localStorage
-  localStorage.setItem("access", data.tokens.access);
-  localStorage.setItem("refresh", data.tokens.refresh);
-  localStorage.setItem("user", JSON.stringify(data.user));
+    if (!data || !data.tokens) {
+      throw new Error("Invalid response from server");
+    }
 
-  api.defaults.headers.common['Authorization'] = `Bearer ${data.token.access}`;
+    localStorage.setItem("access", data.tokens.access);
+    localStorage.setItem("refresh", data.tokens.refresh);
+    localStorage.setItem("user", JSON.stringify(data.user));
 
-  return data;
+    api.defaults.headers.common['Authorization'] = `Bearer ${data.tokens.access}`;
+
+    return data;
+  } catch (error) {
+    console.error("Login error:", error);
+    throw error;
+  }
 };
 
 // Current user
