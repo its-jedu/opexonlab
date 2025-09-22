@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import auth from "../assets/auth.png";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../services/auth";
+import { useAuth } from "../contexts/AuthContext";
 
 const GetStarted = () => {
   const [username, setUsername] = useState("");
@@ -13,6 +14,7 @@ const GetStarted = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,8 +30,8 @@ const GetStarted = () => {
 
     setLoading(true);
     try {
-      await register({ username, email, password });
-      navigate("/dashboard");
+      await register({ username, email, password }, { login: authLogin });
+      navigate("/");
     } catch (err) {
       const data = err.response?.data || {};
 
@@ -40,7 +42,6 @@ const GetStarted = () => {
       };
       setFieldErrors(fe);
 
-      // Generic error (detail / non_field_errors / fallback)
       if (data.detail) setError(data.detail);
       else if (Array.isArray(data.non_field_errors) && data.non_field_errors.length)
         setError(data.non_field_errors[0]);

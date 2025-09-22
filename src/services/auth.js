@@ -1,8 +1,25 @@
 import api from "../lib/api";
 
 // Register
-export const register = (payload) =>
-  api.post("/auth/register/", payload).then((r) => r.data);
+export const register = async (payload, authContext = null) => {
+  try {
+    const response = await api.post("/auth/register/", payload);
+    const data = response.data;
+
+    const loginPayload = {
+      emailOrUsername: payload.email || payload.username,
+      password: payload.password
+    };
+
+    const loginResult = await login(loginPayload, authContext);
+    
+    return loginResult;
+    
+  } catch (error) {
+    console.error("Registration error:", error);
+    throw error;
+  }
+};
 
 // Login
 export const login = async ({ emailOrUsername, password }) => {
@@ -36,17 +53,20 @@ export const login = async ({ emailOrUsername, password }) => {
 export const me = () => api.get("/auth/me/").then((r) => r.data);
 
 // Logout
-export const logout = async () => {
+export const logout = async (authContext = null) => {
   try {
     await api.post("/auth/logout/");
   } catch (err) {
+  } finally {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    localStorage.removeItem("user");
+    delete api.defaults.headers.common['Authorization'];
 
+    if (authContext && typeof authContext === 'function') {
+      authContext();
+    }
   }
-  localStorage.removeItem("access");
-  localStorage.removeItem("refresh");
-  localStorage.removeItem("user");
-
-  delete api.defaults.headers.common['Authorization'];
 };
 
 // Forgot password
