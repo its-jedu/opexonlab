@@ -1,10 +1,11 @@
 import React from "react";
 import Login from "../auth/Login";
-import Hlogin from "../components/Hlogin";
+import DynamicHeader from "../components/DynamicHeader";
 
 const LoginPage = () => {
   return (
     <div>
+      <DynamicHeader />
       <Hlogin />
       <Login />
     </div>

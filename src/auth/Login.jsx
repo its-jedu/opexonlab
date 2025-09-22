@@ -27,30 +27,19 @@ const handleSubmit = async (e) => {
       password: password,
     };
 
-    console.log("Attempting login with:", payload);
-    
     const result = await login(payload);
-    console.log("Login successful, redirecting...", result);
     
-    setTimeout(() => {
-      navigate("/");
-    }, 100);
+    navigate("/");
     
   } catch (err) {
-    console.error("Login error details:", err);
+    console.error("Login error:", err);
     
-    if (err.response) {
-      if (err.response.status === 401) {
-        setError("Invalid email/username or password");
-      } else if (err.response.data?.detail) {
-        setError(err.response.data.detail);
-      } else {
-        setError("Login failed. Please try again.");
-      }
-    } else if (err.request) {
-      setError("Network error. Please check your connection.");
+    if (err.response?.status === 401) {
+      setError("Invalid credentials");
+    } else if (err.response?.data?.detail) {
+      setError(err.response.data.detail);
     } else {
-      setError(err.message || "An unexpected error occurred");
+      setError("Login failed. Please try again.");
     }
   } finally {
     setLoading(false);

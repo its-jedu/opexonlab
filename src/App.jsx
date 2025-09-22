@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
 import "./App.css";
 import logo from "./assets/logo.png";
 // import BlogDetails from "./pages/BlogDetails";
@@ -25,37 +26,39 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-          <div className="relative">
-            <img
-              src={logo}
-              alt="Loading logo"
-              className="w-20 h-20 animate-scale-pulse relative z-10"
-            />
+    <AuthProvider>
+      <Suspense
+        fallback={
+          <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="relative">
+              <img
+                src={logo}
+                alt="Loading logo"
+                className="w-20 h-20 animate-scale-pulse relative z-10"
+              />
+            </div>
           </div>
-        </div>
-      }
-    >
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        {/* <Route path="/about" element={<AboutPage />} /> */}
-        {/* <Route path="/product" element={<ProductPage />} /> */}
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/blog/:id" element={<BlogDetail />} />
-        <Route path="/services" element={<ServicePage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        }
+      >
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {/* <Route path="/about" element={<AboutPage />} /> */}
+          {/* <Route path="/product" element={<ProductPage />} /> */}
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:id" element={<BlogDetail />} />
+          <Route path="/services" element={<ServicePage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/login" element={<LoginPage />} />
 
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/gmail" element={<GmailPage />} />
-        <Route path="/get-started" element={<GetStartedPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/gmail" element={<GmailPage />} />
+          <Route path="/get-started" element={<GetStartedPage />} />
 
-        {/* Not Found route */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Suspense>
+          {/* Not Found route */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+    </AuthProvider>
   );
 }
 
