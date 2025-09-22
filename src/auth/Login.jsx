@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import auth from "../assets/auth.png";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../services/auth";
+import { useAuth } from "../contexts/AuthContext";
 
 const Login = () => {
   const [identifier, setIdentifier] = useState(""); // email or username
@@ -10,41 +11,44 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!identifier || !password) {
-    setError("All fields are required");
-    return;
-  }
-
-  setLoading(true);
-  setError("");
-
-  try {
-    const payload = {
-      emailOrUsername: identifier,
-      password: password,
-    };
-
-    const result = await login(payload);
-    
-    navigate("/");
-    
-  } catch (err) {
-    console.error("Login error:", err);
-    
-    if (err.response?.status === 401) {
-      setError("Invalid credentials");
-    } else if (err.response?.data?.detail) {
-      setError(err.response.data.detail);
-    } else {
-      setError("Login failed. Please try again.");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!identifier || !password) {
+      setError("All fields are required");
+      return;
     }
-  } finally {
-    setLoading(false);
-  }
-};
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const payload = {
+        emailOrUsername: identifier,
+        password: password,
+      };
+
+      const result = await login(payload);
+      
+      authLogin(result.user);
+      
+      navigate("/");
+      
+    } catch (err) {
+      console.error("Login error:", err);
+      
+      if (err.response?.status === 401) {
+        setError("Invalid credentials");
+      } else if (err.response?.data?.detail) {
+        setError(err.response.data.detail);
+      } else {
+        setError("Login failed. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-between flex-col">

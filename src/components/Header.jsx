@@ -1,12 +1,15 @@
-// src/components/Header.jsx
 import { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Menu, X, Sun, Moon } from "lucide-react";
+import { logout } from "../services/auth";
+import { useAuth } from "../contexts/AuthContext";
 import logo from "../assets/headlogo.png";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const navigate = useNavigate();
+  const { user, logout: authLogout } = useAuth();
 
   // Toggle dark mode
   useEffect(() => {
@@ -16,6 +19,16 @@ const Header = () => {
       document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
+
+  const handleLogout = async () => {
+    try {
+      await logout(authLogout);
+      navigate("/");
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
   const navLinks = [
     { path: "/", label: "Home" },
@@ -27,8 +40,8 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white dark:bg-gray-900  sticky top-0 z-50">
-      <div className="max-w-7x py-4 mx-auto w-full px-4 sm:px-6 lg:px-8">
+    <header className="bg-white dark:bg-gray-900 sticky top-0 z-50">
+      <div className="max-w-7xl py-4 mx-auto w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/">
@@ -42,7 +55,7 @@ const Header = () => {
                 key={link.path}
                 to={link.path}
                 className={({ isActive }) =>
-                  `text-lg font-medium  ${
+                  `text-lg font-medium ${
                     isActive
                       ? "text-primary text-black"
                       : "text-[#4B4B4B] dark:text-gray-300 hover:text-primary"
@@ -68,21 +81,37 @@ const Header = () => {
               )}
             </button>
 
-            {/* Login */}
-            <Link
-              to="/login"
-              className="px-6 py-2 text-sm font-medium text-white bg-[#38A109] rounded-full dark:text-gray-300 hover:text-primary"
-            >
-              Login
-            </Link>
-
-            {/* Get Started */}
-            <Link
-              to="/get-started"
-              className="px-6 py-2 text-sm font-medium text-white bg-[#38A109] rounded-full dark:text-gray-300 hover:text-primary"
-            >
-              Get Started
-            </Link>
+            {/* Authentication Section */}
+            {user ? (
+              // Logged in state
+              <div className="flex items-center space-x-4">
+                <span className="text-sm text-gray-700 dark:text-gray-300">
+                  Welcome, {user.username}!
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="px-6 py-2 text-sm font-medium text-white bg-[#38A109] rounded-full hover:bg-green-700 transition"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              // Logged out state
+              <div className="flex items-center space-x-4">
+                <Link
+                  to="/login"
+                  className="px-6 py-2 text-sm font-medium text-white bg-[#38A109] rounded-full hover:bg-green-700 transition"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/get-started"
+                  className="px-6 py-2 text-sm font-medium text-white bg-[#38A109] rounded-full hover:bg-green-700 transition"
+                >
+                  Get Started
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -121,20 +150,39 @@ const Header = () => {
 
             {/* Mobile Buttons */}
             <div className="flex flex-col space-y-2 mt-4">
-              <Link
-                to="/login"
-                onClick={() => setIsOpen(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary"
-              >
-                Login
-              </Link>
-              <Link
-                to="/get-started"
-                onClick={() => setIsOpen(false)}
-                className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition"
-              >
-                Get Started
-              </Link>
+              {/* Authentication Section for Mobile */}
+              {user ? (
+                // Logged in state (mobile)
+                <>
+                  <div className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Welcome, {user.username}!
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                // Logged out state (mobile)
+                <>
+                  <Link
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/get-started"
+                    onClick={() => setIsOpen(false)}
+                    className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition"
+                  >
+                    Get Started
+                  </Link>
+                </>
+              )}
 
               {/* Dark/Light Mode */}
               <button

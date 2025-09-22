@@ -1,12 +1,12 @@
 import React from "react";
 import GetStarted from "../auth/GetStarted";
 import Glogin from "../components/Glogin";
-import DynamicHeader from "../components/DynamicHeader";
+import Header from "../components/Header";
 
 const GetStartedPage = () => {
   return (
     <div>
-      <DynamicHeader />
+      <Header />
       <Glogin />
       <GetStarted />
     </div>
