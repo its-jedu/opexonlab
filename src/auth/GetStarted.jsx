@@ -30,8 +30,24 @@ const GetStarted = () => {
 
     setLoading(true);
     try {
-      await register({ username, email, password }, { login: authLogin });
+      await api.post("/auth/register/", { username, email, password });
+      
+      const loginPayload = {
+        emailOrUsername: email,
+        password: password
+      };
+      
+      const loginResponse = await api.post("/auth/login/", loginPayload);
+      const loginData = loginResponse.data;
+
+      localStorage.setItem("access", loginData.tokens.access);
+      localStorage.setItem("refresh", loginData.tokens.refresh);
+      localStorage.setItem("user", JSON.stringify(loginData.user));
+
+      authLogin(loginData.user);
+
       navigate("/");
+      
     } catch (err) {
       const data = err.response?.data || {};
 

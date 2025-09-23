@@ -11,9 +11,24 @@ export const register = async (payload, authContext = null) => {
       password: payload.password
     };
 
-    const loginResult = await login(loginPayload, authContext);
-    
-    return loginResult;
+    const loginResponse = await api.post("/auth/login/", loginPayload);
+    const loginData = loginResponse.data;
+
+    if (!loginData || !loginData.tokens) {
+      throw new Error("Auto-login failed after registration");
+    }
+
+    localStorage.setItem("access", loginData.tokens.access);
+    localStorage.setItem("refresh", loginData.tokens.refresh);
+    localStorage.setItem("user", JSON.stringify(loginData.user));
+
+    api.defaults.headers.common['Authorization'] = `Bearer ${loginData.tokens.access}`;
+
+    if (authContext && authContext.login) {
+      authContext.login(loginData.user);
+    }
+
+    return loginData;
     
   } catch (error) {
     console.error("Registration error:", error);
