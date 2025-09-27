@@ -3,11 +3,12 @@ import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import "./App.css";
 import logo from "./assets/logo.png";
+import ScrollToTop from "./components/ScrollToTop";
 // import BlogDetails from "./pages/BlogDetails";
 
 // Lazy load pages
 const HomePage = lazy(() => import("./pages/HomePage"));
-// const AboutPage = lazy(() => import("./pages/AboutPage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
 // const ProductPage = lazy(() => import("./pages/ProductPage"));
 
 const BlogPage = lazy(() => import("./pages/BlogPage"));
@@ -40,9 +41,10 @@ function App() {
           </div>
         }
       >
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          {/* <Route path="/about" element={<AboutPage />} /> */}
+          <Route path="/about" element={<AboutPage />} />
           {/* <Route path="/product" element={<ProductPage />} /> */}
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:id" element={<BlogDetail />} />
